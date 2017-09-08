@@ -1,0 +1,13 @@
+tasks:
+
+#########################
+- identifier: 0
+  name: train
+
+#########################
+- identifier: 1
+  name: predict
+
+#########################
+- identifier: 2
+  name: evaluate
