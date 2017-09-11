@@ -4,10 +4,16 @@ tasks:
 - identifier: 0
   name: train
 
+  record_path: <<>>/record.txt
+
 #########################
 - identifier: 1
   name: predict
 
+  record_path: <<0>>/record.txt
+
 #########################
 - identifier: 2
   name: evaluate
+
+  temp_path: <<<1>>>/temp.txt
