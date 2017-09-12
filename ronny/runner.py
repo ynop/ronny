@@ -18,6 +18,7 @@ class Runner(object):
     def run(self):
         parser = argparse.ArgumentParser(description='Run workflow')
         parser.add_argument('config_path', type=str)
+        parser.add_argument('--workdir', type=str, default=None)
         parser.add_argument('--out', type=str, default=None)
         parser.add_argument('--cache', type=str, default=None)
         parser.add_argument('--range', type=str, default=None)
@@ -49,7 +50,8 @@ class Runner(object):
                 if end >= start:
                     tasks = [x for x in range(start, end + 1)]
 
-        wf = workflow.Workflow(config, available_tasks=self._get_task_dictionary(), output_path=out_path, cache_path=cache_path)
+        wf = workflow.Workflow(config, available_tasks=self._get_task_dictionary(), work_dir=args.workdir, output_path=out_path,
+                               cache_path=cache_path)
         wf.run(tasks_to_execute=tasks)
 
     def _get_task_dictionary(self):

@@ -6,11 +6,16 @@ wc_path_pattern = re.compile(r'(<{2,3})(.*?)(>{2,3})')
 
 
 class Workflow(object):
-    def __init__(self, config, available_tasks={}, output_path=None, cache_path=None):
+    def __init__(self, config, available_tasks={}, work_dir=None, output_path=None, cache_path=None):
         self.available_tasks = available_tasks
 
-        self.output_path = output_path
-        self.cache_path = cache_path
+        if work_dir is None:
+            self.work_dir = os.getcwd()
+        else:
+            self.work_dir = work_dir
+
+        self.output_path = os.path.join(self.work_dir, output_path)
+        self.cache_path = os.path.join(self.work_dir, cache_path)
 
         self.config = config
         self.tasks = self._load_tasks()
@@ -44,7 +49,7 @@ class Workflow(object):
                 os.makedirs(task_cache_path, exist_ok=True)
 
             task_config = self._replace_rel_paths_in_config(task_config, task_output_path, task_cache_path, tasks)
-            task = task_class(index, task_config, identifier=identifier, output_path=task_output_path, cache_path=task_cache_path)
+            task = task_class(index, task_config, identifier=identifier, work_dir=self.work_dir, output_path=task_output_path, cache_path=task_cache_path)
 
             tasks[task.identifier] = task
 

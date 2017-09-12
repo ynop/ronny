@@ -8,7 +8,7 @@ import yaml
 class Task(object):
     name = "undefined"
 
-    def __init__(self, execution_index, config, identifier=None, output_path=None, cache_path=None):
+    def __init__(self, execution_index, config, identifier=None, work_dir=None, output_path=None, cache_path=None):
         self.execution_index = execution_index
 
         if identifier is None:
@@ -17,6 +17,7 @@ class Task(object):
             self.identifier = str(identifier)
 
         self.cfg = config
+        self.work_dir = work_dir
         self.output_path = output_path
         self.cache_path = cache_path
 
@@ -41,6 +42,9 @@ class Task(object):
     #   PATH ACCESS
     #
 
+    def work(self, path_components):
+        return self._abs(path_components, self.work_dir)
+
     def output(self, path_components):
         return self._abs(path_components, self.output_path)
 
@@ -63,7 +67,7 @@ class Task(object):
     #
 
     def cfg_abs(self, key_path):
-        return self._abs(self.cfg_entry(key_path))
+        return self._abs(self.cfg_entry(key_path), self.work_dir)
 
     def cfg_entry(self, key_path):
         if type(key_path) != list:

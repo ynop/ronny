@@ -141,5 +141,6 @@ python main.py config_path [--out examples/data] [--cache examples/cache] [--ran
 
 config_path:    Path to the workflow config.   
 --out:          Path to the output folder (optional).   
+--workdir:      Path to set the working directory (If not set the path where the script is executed is used.).   
 --cache:        Path to the cache folder (optional).   
 --range:        Run only the given range of tasks (zero based).
