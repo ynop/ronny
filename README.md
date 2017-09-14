@@ -123,15 +123,39 @@ For example we can retrieve the record_path within the train task like:
 file_path = self.cfg['record_path']
 ```
 
-### Output and Cache folders
-A workflow can have an output or/and a cache folder (Defined by run arguments).
+### Working with paths in the config
+There are basically three base paths:   
+
+* Working directory
+* Output directory (optional)
+* Cache directory (optional)
+
 The output folder is thought for files that are going to be used later on, while cache folder is used for files that or going to be deleted soon.
-If we want to share files/data between tasks, we can use wildcards.
+When we define paths in the configuration/definition, we can use wildcards to reference to output or cache folders.
 
 <<X>> : Output folder of task with identifier X.   
 <<<X>>> : Cache folder of task with identifier X.
 
 If no identifier is given (<<>>, <<<>>>) the output resp. cache folder of the current folder is meant.
+
+### Working with paths in the task code
+
+```python
+# get a path relative to the cache folder
+path = self.cache('test/data.npy')
+
+# get a path relative to the out folder
+path = self.output('test/result.txt')
+
+# get a path relative to the work dir
+path = self.abs('somewhere/thefile.txt')
+
+# concatenate a relative path from config
+path = self.cfg_abs('config-key')
+path = self.cfg_abs(['nested', 'config-key'])
+```
+
+
 
 ### Running the workflow
 

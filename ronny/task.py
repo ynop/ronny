@@ -42,6 +42,9 @@ class Task(object):
     #   PATH ACCESS
     #
 
+    def abs(self, path_components):
+        return self.work(path_components)
+
     def work(self, path_components):
         return self._abs(path_components, self.work_dir)
 
@@ -85,8 +88,9 @@ class Task(object):
     #
 
     def _log_start(self):
-        logging.info('#' * 50)
+        logging.info('#' * 100)
         logging.info('## {}: {} ({}) starting ...'.format(self.execution_index, self.identifier, self.name))
+        logging.info('#' * 100)
         logging.info('##')
         logging.info('## Output: {}'.format(self.output_path))
         logging.info('## Cache: {}'.format(self.cache_path))
@@ -96,14 +100,14 @@ class Task(object):
         for line in yaml.dump(self.cfg, default_flow_style=False).split('\n'):
             logging.info("##  {}".format(line))
 
-        logging.info('#' * 50)
+        logging.info('#' * 100)
 
     def _log_end(self):
-        logging.info('#' * 50)
+        logging.info('#' * 100)
         logging.info('## {}: {} ({}) finished ...'.format(self.execution_index, self.identifier, self.name))
         logging.info('##')
         logging.info('## Duration: {} s'.format(self._end_time - self._start_time))
-        logging.info('#' * 50)
+        logging.info('#' * 100)
 
     def _setup_logging(self):
         logging.getLogger().handlers = []
