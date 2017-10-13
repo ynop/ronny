@@ -30,7 +30,10 @@ class Task(object):
         self._log_start()
         self._start_time = time.time()
 
-        self.run()
+        try:
+            self.run()
+        except Exception as e:
+            logging.exception(e)
 
         self._end_time = time.time()
         self._log_end()
